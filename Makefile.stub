@@ -1,0 +1,17 @@
+#!/usr/bin/make
+
+export BASH=bash
+DOCKER_DIR=../docker
+APP_FOLDER_NAME=
+
+copy-env:
+    cp -b /var/www/docker/.env.example /var/www/${APP_FOLDER_NAME}/.docker
+
+up:
+	cd $(DOCKER_DIR) && exec docker-compose --env-file .docker up -d nginx php-worker redis mariadb adminer laravel-echo-server
+
+down:
+	cd $(DOCKER_DIR) && exec docker-compose down
+
+cli:
+	cd $(DOCKER_DIR) && exec docker-compose exec --user=laradock workspace zsh
