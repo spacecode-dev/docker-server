@@ -298,25 +298,6 @@ RUN set -eux; \
 # ;fi
 
 ###########################################################################
-# AMQP:
-###########################################################################
-
-ARG INSTALL_AMQP=false
-
-RUN set -eux; \
-    if [ ${INSTALL_AMQP} = true ]; then \
-      # # Install the amqp extension
-      apt-get -yqq install librabbitmq-dev; \
-      if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
-        pecl install amqp-1.11.0beta; \
-      else \
-        pecl install amqp; \
-      fi; \
-      docker-php-ext-enable amqp; \
-      php -m | grep -oiE '^amqp$'; \
-    fi
-
-###########################################################################
 # pcntl
 ###########################################################################
 
